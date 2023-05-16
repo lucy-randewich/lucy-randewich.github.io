@@ -1,0 +1,21 @@
+body {
+    background: url('background.jpeg') no-repeat center center fixed;
+    background-size: cover;
+    filter: brightness(90%);
+    margin: 0;
+    padding: 0;
+  }
+  
+  .coming-soon-container {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  h1 {
+    font-family: 'Courier New', monospace;
+    font-size: 45px;
+    color: #ffffff;
+  }
+  
