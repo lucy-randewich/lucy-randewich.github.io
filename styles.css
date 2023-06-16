@@ -273,6 +273,7 @@ header h1 {
 
 .project-box {
   position: relative;
+  border-radius: 25px;
   width: 100%;
   height: 100%;
 }
@@ -280,6 +281,7 @@ header h1 {
 .project-box img {
   width: 100%;
   height: 100%;
+  border-radius: 25px;
   transition: opacity 0.3s ease;
 }
 
