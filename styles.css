@@ -1,21 +1,452 @@
+@font-face {
+    font-family: 'Gilroy';
+    src: url('Gilroy-Thin.ttf') format('truetype');
+    font-weight: lighter;
+}
+
+@font-face {
+    font-family: 'Gilroy';
+    src: url('Gilroy-Regular.ttf') format('truetype');
+    font-weight: normal;
+}
+
+@font-face {
+    font-family: 'Gilroy';
+    src: url('Gilroy-SemiBold.ttf') format('truetype');
+    font-weight: 600;
+}
+
+@font-face {
+    font-family: 'Gilroy';
+    src: url('Gilroy-Bold.ttf') format('truetype');
+    font-weight: bold;
+}
+
+
 body {
     background: url('background.jpeg') no-repeat center center fixed;
     background-size: cover;
     filter: brightness(90%);
     margin: 0;
     padding: 0;
-  }
-  
-  .coming-soon-container {
-    height: 100vh;
+    z-index: 1;
+}
+
+.nav-container {
+    top: -30px;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    transition: top 1s ease, opacity 1.5s ease;
+    opacity: 0; /* Initially set opacity to 0 */
+}
+
+.nav-container.animate {
+    top: -5px;
+    opacity: 1; /* Set opacity to 1 when animated class is added */
+}
+
+nav {
+    font-family: 'Gilroy', Arial, sans-serif;
+    font-weight: normal;
+    background-color: transparent;
     display: flex;
     justify-content: center;
     align-items: center;
-  }
-  
-  h1 {
-    font-family: 'Courier New', monospace;
-    font-size: 45px;
+    padding: 30px;
+}
+
+/* White bars either side of the nav menu */
+nav:before,
+nav:after {
+    width: 33%;
+    content: "";
+    height: 2px;
+    background-color: #ffffff;
+    position: absolute;
+}
+nav:before {left: 0;}
+nav:after {right: 0;}
+
+/* Menu items */
+nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+nav ul li {
+    display: inline-block;
+    margin: 0 20px; /* Spacing between menu items */
+    position: relative;
+}
+
+/* Dots between menu items */
+nav ul li:not(:last-child)::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: calc(100% + 25px); 
+    transform: translate(-50%, -50%);
+    width: 5px;
+    height: 5px;
+    background-color: #ffffff;
+    border-radius: 50%;
+}
+
+nav ul li a {
+    text-decoration: none;
     color: #ffffff;
+}
+  
+nav ul li.active a {
+    position: relative;
+    text-decoration: none;
+    color: #ffffff;
+}
+  
+nav ul li.active a::after {
+    content: "";
+    position: absolute;
+    bottom: -3px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: #ffffff;
+    opacity: 0.5;
+}
+  
+header {
+    font-family: 'Gilroy', Arial, sans-serif;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 100px; 
+}
+  
+header h1 {
+    color: #ffffff;
+    font-weight: bold;
+    font-size: 45px;
+}
+
+@keyframes slideInFromRight {
+    0% {
+      transform: translateX(10%);
+      opacity: 0;
+    }
+    100% {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
   }
   
+  @keyframes fadeInHalf {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 0.5;
+    }
+  }
+  
+  header.index-header {
+    text-align: left;
+    padding-left: 80px; /* Add padding to shift the text to the right */
+    margin-top: 240px; /* Adjust the top margin as needed */
+  }
+  
+  header h1.name {
+    font-family: 'Gilroy', Arial, sans-serif;
+    font-weight: bold;
+    font-size: 100px;
+    color: #ffffff;
+    line-height: 1.1;
+    animation: slideInFromRight 1.5s ease forwards; /* Apply the slide-in animation */
+  }
+  
+  .description {
+    font-family: 'Gilroy', Arial, sans-serif;
+    font-weight: normal;
+    font-size: 20px;
+    color: #ffffff;
+    margin-bottom: 30px; /* Adjust the margin as needed */
+    margin-top: -40px; /* Adjust the negative margin to move the text closer to the name */
+    opacity: 0;
+    animation: fadeInHalf 3s ease forwards; /* Apply the fade-in animation */
+  }
+
+  .dot {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    background-color: #ffffff;
+    border-radius: 50%;
+    margin-left: 4px;
+  }
+  
+  header button {
+    padding: 10px 20px;
+    border: 2px solid #ffffff;
+    background-color: transparent;
+    color: #ffffff;
+    font-family: 'Gilroy', Arial, sans-serif;
+    font-weight: normal;
+    font-size: 18px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    opacity: 0;
+    animation: fadeIn 3s ease forwards; 
+  }
+  
+  button:hover {
+    background-color: #ffffff;
+    color: #000000;
+  }
+
+
+
+
+/* PROJECTS PAGE */
+
+.container {
+  font-family: 'Gilroy', Arial, sans-serif;
+  display: flex;
+  margin: auto;
+  margin-top: 60px;
+}
+
+.intro {
+  font-family: 'Gilroy', Arial, sans-serif;
+  font-weight: normal;
+  font-size: 20px;
+  color: #ffffff;
+  opacity: 0;
+  animation: fadeInHalf 1.5s ease forwards;
+  text-align: left;
+  margin-left: 40px;
+  margin-top: 10px;
+  flex-basis: 33.33%;
+}
+
+.project-grid {
+  background-color: #00000073;
+  opacity: 0;
+  animation: fadeIn 1.5s ease forwards;
+  font-family: 'Gilroy', Arial, sans-serif;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 35px;
+  flex-basis: 50%;
+  margin-left: 100px;
+  overflow-y: auto;
+  height: 650px;
+}
+
+
+.project-box {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.project-box img {
+  width: 100%;
+  height: 100%;
+  transition: opacity 0.3s ease;
+}
+
+.project-details {
+  position: absolute;
+  top:0;
+  left:20;
+  width: 90%;
+  height: 100%;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  padding-left: 10px;
+}
+
+.project-box:hover img {
+  opacity: 0.2;
+}
+
+.project-box:hover .project-details {
+  opacity: 1;
+}
+
+
+  
+
+
+/* ARTWORK PAGE */
+  
+
+  .artdescription {
+    text-align: center;
+    color: #ffffff;
+    margin-top: 20px;
+  }
+  
+  .artdescription h2 {
+    font-family: 'Gilroy', Arial, sans-serif;
+    font-weight: bold;
+    font-size: 30px;
+    color: #ffffff;
+    opacity: 0;
+    animation: fadeIn 2s ease forwards; /* Apply the fade-in animation */
+  }
+  
+  .artdescription p {
+    font-family: 'Gilroy', Arial, sans-serif;
+    font-weight: normal;
+    font-size: 20px;
+    color: #ffffff;
+    opacity: 0;
+    animation: fadeInHalf 2s ease forwards; /* Apply the fade-in animation */
+  }
+
+  .artdescription a {
+    color: inherit;
+    text-decoration: none;
+    position: relative;
+  }
+  
+  .artdescription a::after {
+    content: "";
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background-color: #ffffff;
+    opacity: 20%;
+  }
+  
+  .artdescription a:hover::after {
+    background-color: transparent;
+  }
+  
+
+  .gallery-container {
+    display: flex;
+    width:fit-content;
+    margin:auto;
+    margin-top:60px;
+    opacity: 0;
+    animation: fadeIn 1.5s ease forwards; /* Apply the fade-in animation */
+  }
+  
+  .gallery {
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-gap: 20px;
+    max-width: 800px; /* Adjust the max-width to your desired size */
+    max-height: 400px;
+  }
+  
+  .grid-item {
+    max-width: 400px;
+    max-height: 400px;
+    position: relative;
+  }
+  
+  .image,
+  .image-hover {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: opacity 0.3s ease;
+  }
+  
+  .image-hover {
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    pointer-events: none;
+  }
+  
+  .grid-item:hover .image {
+    opacity: 0;
+  }
+  
+  .grid-item:hover .image-hover {
+    opacity: 1;
+  }
+
+  .gallery-buttons {
+    flex: 1;
+    margin-top:90px;
+    margin-left:30px;
+    max-width:fit-content;
+  }
+
+  .gallery-buttons button {
+    display: block;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background-color: #000;
+    border: none;
+    margin-bottom: 10px;
+    opacity: 0.5;
+    transition: opacity 0.3s ease;
+  }
+  
+  .gallery-buttons button:hover {
+    opacity: 1;
+  }
+  
+  .gallery-buttons button.active {
+    opacity: 1;
+  }
+  
+  
+
+/* CONTACT PAGE */
+
+.text {
+  font-family: 'Gilroy', Arial, sans-serif;
+  font-weight: normal;
+  font-size: 20px;
+  color: #ffffff;
+  opacity: 0;
+  animation: fadeInHalf 1.5s ease forwards;
+}
+  
+.icons-container {
+  margin-top:60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.icons-container a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 60px; /* Adjust the width to the desired size */
+  height: 60px; /* Adjust the height to the desired size */
+  margin: 0 10px; /* Adjust the margin as needed */
+}
+
+.icons-container img {
+  width: 100%; /* Make the image fill the container */
+  height: auto; /* Maintain the aspect ratio */
+}
+
