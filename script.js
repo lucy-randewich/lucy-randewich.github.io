@@ -1,7 +1,7 @@
 window.addEventListener('DOMContentLoaded', (event) => {
     const cvButton = document.getElementById('cv-button');
     cvButton.addEventListener('click', () => {
-        window.open('CV-15-05-23.pdf', '_blank');
+        window.open('CV_07-06-23.pdf', '_blank');
     });
 });
 
