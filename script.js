@@ -3,7 +3,7 @@
 window.addEventListener('DOMContentLoaded', (event) => {
     const cvButton = document.getElementById('cv-button');
     cvButton.addEventListener('click', () => {
-        window.open('CV_07-06-23.pdf', '_blank');
+        window.open('resources/CV_07-06-23.pdf', '_blank');
     });
 });
 
@@ -101,14 +101,14 @@ function changeGallery(number) {
     gallery.innerHTML = ""; // Clear the current gallery
 
     if (number == 1) {
-      createGridItem(gallery, "artwork/landy1.jpg", "artwork/landy2.jpg");
-      createGridItem(gallery, "artwork/landscape1.jpg", "artwork/landscape2.jpg");
+      createGridItem(gallery, "resources/artwork/landy1.jpg", "artwork/landy2.jpg");
+      createGridItem(gallery, "resources/artwork/landscape1.jpg", "artwork/landscape2.jpg");
     } else if (number == 2) {
-      createGridItem(gallery, "artwork/rdj1.jpg", "artwork/rdj2.jpg");
-      createGridItem(gallery, "artwork/billie1.jpg", "artwork/billie2.jpg");
+      createGridItem(gallery, "resources/artwork/rdj1.jpg", "artwork/rdj2.jpg");
+      createGridItem(gallery, "resources/artwork/billie1.jpg", "artwork/billie2.jpg");
     } else if (number == 3) {
-      createGridItem(gallery, "artwork/v1.jpg", "artwork/v2.jpg");
-      createGridItem(gallery, "artwork/vv1.jpg", "artwork/vv2.jpg");
+      createGridItem(gallery, "resources/artwork/v1.jpg", "artwork/v2.jpg");
+      createGridItem(gallery, "resources/artwork/vv1.jpg", "artwork/vv2.jpg");
     }
 
     var buttons = document.querySelectorAll(".gallery-buttons button");

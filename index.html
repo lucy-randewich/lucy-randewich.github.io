@@ -1,96 +1,120 @@
 <!DOCTYPE html>
 <html>
-    
-<head>
-  <title>Lucy Randewich</title>
-  <link rel="stylesheet" type="text/css" href="styles.css">
-  <script src="script.js"></script>
-</head>
 
-<body>
-  <div class="nav-container">
-    <nav>
-      <ul>
-        <li><a href="index.html">Home</a></li>
-        <li><a href="projects.html">Software Projects</a></li>
-        <li><a href="artwork.html">Artwork</a></li>
-        <li><a href="contact.html">Contact</a></li>
-      </ul>
-    </nav>
-  </div>
+    <head>
+      <meta charset="utf-8" />
+      <link rel="stylesheet" type="text/css" href="styles.css">
+      <script src="script.js"></script>
+    </head>
 
+    <body>
+      <div class="background">
+        <script src="main.js"></script>
+
+        <div class="child nav-container">
+          <nav>
+            <ul>
+              <li><a href="index.html">Home</a></li>
+              <li><a href="projects.html">Software Projects</a></li>
+              <li><a href="artwork.html">Artwork</a></li>
+              <li><a href="contact.html">Contact</a></li>
+            </ul>
+          </nav>
+        </div>
   
-  <div class="index-container">
-    <header class="index-header">
-      <h1 class="name">Lucy <br> Randewich<span class="dot"></span></h1>
-      <div class ="description">
-        <a class="typewrite" data-type='[ "Computer Science Grad", "Software Developer", "Realism artist", "Research Associate", "Squashy enthusiast", "Sub-par Web Dev" ]'>
-          <span class="wrap"></span>
-        </a>
+        <div class="child index-container">
+          <header class="index-header">
+            <h1 class="name">Lucy <br> Randewich<span class="dot"></span></h1>
+            <div class ="description">
+              <a class="typewrite" data-type='[ "Computer Science Grad", "Software Developer", "Realism artist", "Research Associate", "Squashy enthusiast", "Sub-par Web Dev" ]'>
+                <span class="wrap"></span>
+              </a>
+            </div>
+            <button id="cv-button">My CV</button>
+          </header>
+        
+          <div class="experience-grid">
+      
+            <a href="https://www.decisions-disruptions.org" target=”_blank”>
+              <div class="experience-box">
+                <div class="experience-date">
+                  <p>2023-Present</p>
+                </div>
+                <div class="experience-text">
+                  <div class="experience-box-2">
+                    <p><b>Research Associate &#x2022 Univeristy of Bristol</b></p>
+                    <p class="arrow" > &#8594 </p>
+                  </div>
+                  <p>I am working with Bristol Cyber Security Group to create an exercise to highlight
+                    cyber security best practice. The role involves the creation of a back-end tool and GUI to 
+                    be used in sessions facilitated by the City of London police force.
+                  </p>
+                </div>
+              </div>
+            </a>
+      
+            <a href="https://bristol.ac.uk/engineering/ilo/industry/software-projects/undergraduate-software-engineering-projects/" target=”_blank”>
+              <div class="experience-box">
+                <div class="experience-date">
+                  <p>2022-Present</p>
+                </div>
+                <div class="experience-text">
+                  <div class="experience-box-2">
+                    <p><b>Teaching Assistant &#x2022 Univeristy of Bristol</b></p>
+                    <p class="arrow" > &#8594 </p>
+                  </div>
+                  <p>My responsibilities include leading weekly stand-up meetings for software engineering project groups, 
+                    and teaching weekly lab sessions as well as preparing technical worksheets for students to practice 
+                    their skills on topics such as operating systems and software security.
+                  </p>
+                </div>
+              </div>
+            </a>
+      
+            <a href="https://nanoporetech.com" target=”_blank”>
+              <div class="experience-box">
+                <div class="experience-date">
+                  <p>Jun-Sept 2022</p>
+                </div>
+                <div class="experience-text">
+                  <div class="experience-box-2">
+                    <p><b>Machine Learning Intern &#x2022 Oxford Nanopore</b></p> 
+                    <p class="arrow" > &#8594 </p>
+                  </div>
+                  <p>Conducted research into differentiable Neural Architecture Search methods for use in the creation of 
+                    networks for basecalling. Worked on the creation of pipeline automation scripting tools to allow easier 
+                    model training and evaluation for the MLOps team.
+                  </p>
+                </div>
+              </div>
+            </a>
+      
+            <a href="https://about.instagram.com/about-us" target=”_blank”>
+              <div class="experience-box">
+                <div class="experience-date">
+                  <p>2018-2020</p>
+                </div>
+                <div class="experience-text">
+                  <div class="experience-box-2">
+                    <p><b>Ambassador &#x2022 Instagram</b></p>
+                    <p class="arrow" > &#8594 </p>
+                  </div>
+                  <p>Collaborated with Instagram teams to provide feedback and suggestions on new features before launch. 
+                    Received "Ambassador of the Month" award for continued contributions.
+                  </p>
+                </div>
+              </div>
+            </a>
+      
+          </div>
+        </div>
       </div>
-      <button id="cv-button">My CV</button>
-    </header>
+      
+
+    </body>
   
-    <div class="experience-grid">
-
-      <div class="experience-box">
-        <div class="experience-date">
-          <p>2023-Present</p>
-        </div>
-        <div class="experience-text">
-          <p><b>Research Associate &#x2022 Univeristy of Bristol</b></p>
-          <p>I am working with Bristol Cyber Security Group to create an exercise to highlight
-             cyber security best practice. The role involves the creation of a back-end tool and GUI to 
-             be used in sessions facilitated by the City of London police force.
-          </p>
-        </div>
-      </div>
-
-      <div class="experience-box">
-        <div class="experience-date">
-          <p>2022-Present</p>
-        </div>
-        <div class="experience-text">
-          <p><b>Teaching Assistant &#x2022 Univeristy of Bristol</b></p>
-          <p>My responsibilities include leading weekly stand-up meetings for software engineering project groups, 
-            and teaching weekly lab sessions as well as preparing technical worksheets for students to practice 
-            their skills on topics such as operating systems and software security.
-          </p>
-        </div>
-      </div>
-
-      <div class="experience-box">
-        <div class="experience-date">
-          <p>Jun-Sept 2022</p>
-        </div>
-        <div class="experience-text">
-          <p><b>Machine Learning Intern &#x2022 Oxford Nanopore</b></p>
-          <p>Conducted research into differentiable Neural Architecture Search methods for use in the creation of 
-            networks for basecalling. Worked on the creation of pipeline automation scripting tools to allow easier 
-            model training and evaluation for the MLOps team.
-          </p>
-        </div>
-      </div>
-
-      <div class="experience-box">
-        <div class="experience-date">
-          <p>2018-2020</p>
-        </div>
-        <div class="experience-text">
-          <p><b>Ambassador &#x2022 Instagram</b></p>
-          <p>Collaborated with Instagram teams to provide feedback and suggestions on new features before launch. 
-            Received "Ambassador of the Month" award for continued contributions.
-          </p>
-        </div>
-      </div>
-
+    <div class="footer">
+      &copy; <script>new Date().getFullYear()>2010&&document.write(new Date().getFullYear());</script>, Lucy Randewich.
     </div>
-  </div>
-
-</body>
-
-<div class="footer">
-  &copy; <script>new Date().getFullYear()>2010&&document.write(new Date().getFullYear());</script>, Lucy Randewich.
-</div>
 
 </html>
