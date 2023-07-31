@@ -101,14 +101,14 @@ function changeGallery(number) {
     gallery.innerHTML = ""; // Clear the current gallery
 
     if (number == 1) {
-      createGridItem(gallery, "resources/artwork/landy1.jpg", "artwork/landy2.jpg");
-      createGridItem(gallery, "resources/artwork/landscape1.jpg", "artwork/landscape2.jpg");
+      createGridItem(gallery, "resources/artwork/landy1.jpg", "resources/artwork/landy2.jpg");
+      createGridItem(gallery, "resources/artwork/landscape1.jpg", "resources/artwork/landscape2.jpg");
     } else if (number == 2) {
-      createGridItem(gallery, "resources/artwork/rdj1.jpg", "artwork/rdj2.jpg");
-      createGridItem(gallery, "resources/artwork/billie1.jpg", "artwork/billie2.jpg");
+      createGridItem(gallery, "resources/artwork/rdj1.jpg", "resources/artwork/rdj2.jpg");
+      createGridItem(gallery, "resources/artwork/billie1.jpg", "resources/artwork/billie2.jpg");
     } else if (number == 3) {
-      createGridItem(gallery, "resources/artwork/v1.jpg", "artwork/v2.jpg");
-      createGridItem(gallery, "resources/artwork/vv1.jpg", "artwork/vv2.jpg");
+      createGridItem(gallery, "resources/artwork/v1.jpg", "resources/artwork/v2.jpg");
+      createGridItem(gallery, "resources/artwork/vv1.jpg", "resources/artwork/vv2.jpg");
     }
 
     var buttons = document.querySelectorAll(".gallery-buttons button");
