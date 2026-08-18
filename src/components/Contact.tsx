@@ -1,110 +1,14 @@
-import { Box, IconButton, Typography } from "@mui/material";
-import {
-  GitHub,
-  LinkedIn,
-  Mail,
-  Instagram,
-} from "@mui/icons-material";
+import { Box, Link, Typography } from '@mui/material';
 
-interface ContactProps {
-  id?: string;
-}
-
-const Contact = ({ id }: ContactProps) => {
-  return (
-    <section id={id} className="contact">
-      <Box
-        component="footer"
-        sx={{
-          backgroundColor: "#222",
-          color: "#fff",
-          px: { xs: 3, md: 6 },
-          py: 3,
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          borderTop: "1px solid rgba(255, 255, 255, 0.1)",
-        }}
-      >
-        {/* Name */}
-        <Box>
-          <Typography
-            sx={{
-              fontSize: "0.9rem",
-              fontWeight: 600,
-              letterSpacing: "-0.01em",
-            }}
-          >
-            Get in touch
-          </Typography>
-
-          <Typography
-            sx={{
-              fontSize: "0.7rem",
-              color: "rgba(255, 255, 255, 0.5)",
-              mt: 0.3,
-            }}
-          >
-            Via Email or LinkedIn
-          </Typography>
-        </Box>
-
-        {/* Social links */}
-        <Box
-          sx={{
-            display: "flex",
-            gap: 0.5,
-          }}
-        >
-          {[
-            {
-              label: "GitHub",
-              href: "https://github.com/lucy-randewich",
-              icon: <GitHub />,
-            },
-            {
-              label: "LinkedIn",
-              href: "https://www.linkedin.com/in/lucyrandewich",
-              icon: <LinkedIn />,
-            },
-            {
-              label: "Email",
-              href: "mailto:lucyrandewich@gmail.com",
-              icon: <Mail />,
-            },
-            {
-              label: "Instagram",
-              href: "https://www.instagram.com/laurcty/",
-              icon: <Instagram />,
-            },
-          ].map(({ label, href, icon }) => (
-            <IconButton
-              key={label}
-              component="a"
-              href={href}
-              target={label === "Email" ? undefined : "_blank"}
-              rel={label === "Email" ? undefined : "noreferrer"}
-              aria-label={label}
-              sx={{
-                color: "rgba(255, 255, 255, 0.7)",
-                width: 38,
-                height: 38,
-                transition: "all 0.2s ease",
-
-                "&:hover": {
-                  color: "#fff",
-                  backgroundColor: "rgba(255, 255, 255, 0.1)",
-                  transform: "translateY(-2px)",
-                },
-              }}
-            >
-              {icon}
-            </IconButton>
-          ))}
-        </Box>
-      </Box>
-    </section>
-  );
-};
-
+interface ContactProps { id?: string }
+const Contact = ({ id }: ContactProps) => <section id={id}>
+  <Box component="footer" sx={{ bgcolor: '#171716', color: '#fff', px: { xs: 2.5, md: 4 }, py: { xs: 7, md: 9 } }}>
+    <Box sx={{ maxWidth: '1200px', mx: 'auto' }}>
+      <Typography sx={{ color: '#e7a7a9', fontSize: '.75rem', letterSpacing: '.16em', fontWeight: 700, textTransform: 'uppercase', mb: 2 }}>Get in touch</Typography>
+      <Typography sx={{ fontFamily: 'Georgia, serif', fontSize: { xs: '2.7rem', md: '4.5rem' }, lineHeight: 1, letterSpacing: '-.05em', maxWidth: '720px' }}>Interested in working together?</Typography>
+      <Link href="mailto:lucyrandewich@gmail.com" underline="none" sx={{ display: 'inline-block', color: '#fff', fontSize: { xs: '1.2rem', md: '1.5rem' }, fontWeight: 600, borderBottom: '1px solid #e7a7a9', mt: 4, pb: .5, '&:hover': { color: '#e7a7a9' } }}>lucyrandewich@gmail.com</Link>
+      <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 3, mt: 7, pt: 2.5, borderTop: '1px solid #43413d' }}><Link href="https://github.com/lucy-randewich" target="_blank" rel="noreferrer" sx={{ color: '#d7d4ce', '&:hover': { color: '#fff' } }}>GitHub</Link><Link href="https://www.linkedin.com/in/lucyrandewich" target="_blank" rel="noreferrer" sx={{ color: '#d7d4ce', '&:hover': { color: '#fff' } }}>LinkedIn</Link><Typography sx={{ color: '#a7a49e', ml: { md: 'auto' }, fontSize: '.85rem' }}>© {new Date().getFullYear()} Lucy Randewich</Typography></Box>
+    </Box>
+  </Box>
+</section>;
 export default Contact;
