@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import VolumeOffIcon from "@mui/icons-material/VolumeOff";
 import VolumeUpIcon from "@mui/icons-material/VolumeUp";
-import { Box, Dialog, IconButton, Typography } from "@mui/material";
+import { Box, Button, Dialog, IconButton, Typography } from "@mui/material";
 
 type TankCell = { x: number; y: number };
 
@@ -28,23 +28,40 @@ const Shrimp = ({
   label,
   style,
   isPartyTime,
+  isEating = false,
+  isMoving = false,
+  swimFrame = 0,
+  facing = "right",
 }: {
   className: string;
   label?: string;
   style?: React.CSSProperties;
   isPartyTime?: boolean;
+  isEating?: boolean;
+  isMoving?: boolean;
+  swimFrame?: number;
+  facing?: "left" | "right";
 }) => (
-  <Box className={className} aria-label={label} style={style}>
-    <Box className="shrimp-body" />
-    <Box className="shrimp-segment segment-one" />
-    <Box className="shrimp-segment segment-two" />
-    <Box className="shrimp-segment segment-three" />
-    <Box className="shrimp-segment segment-four" />
-    <Box className="shrimp-tail" />
-    <Box className="shrimp-eye" />
-    <Box className="shrimp-claw" />
-    {isPartyTime && <Box className="shrimp-party-hat" />}
-  </Box>
+  <Box
+    component="img"
+    src={
+      isPartyTime
+        ? "/shrimp-party.png"
+        : isEating
+          ? "/shrimp-eat.png"
+          : isMoving
+            ? `/shrimp-swim-${swimFrame + 1}.png`
+            : "/shrimp-idle.png"
+    }
+    className={className}
+    aria-label={label}
+    style={style}
+    sx={{
+      objectFit: "contain",
+      imageRendering: "pixelated",
+      transform: facing === "left" ? "scaleX(-1)" : undefined,
+    }}
+  />
 );
 
 export const ShrimpTank = ({
@@ -63,12 +80,19 @@ export const ShrimpTank = ({
   const [isMuted, setIsMuted] = useState(false);
   const [showKeyHint, setShowKeyHint] = useState(true);
   const [score, setScore] = useState(0);
+  const [isEating, setIsEating] = useState(false);
+  const [isMoving, setIsMoving] = useState(false);
+  const [swimFrame, setSwimFrame] = useState(0);
+  const [facing, setFacing] = useState<"left" | "right">("right");
   const isPartyTime = score >= 67;
   const tankRef = useRef<HTMLDivElement>(null);
   const audioContextRef = useRef<AudioContext | null>(null);
   const musicTimerRef = useRef<number | null>(null);
+  const movementTimerRef = useRef<number | null>(null);
+  const eatingTimerRef = useRef<number | null>(null);
 
   const moveShrimp = (xChange: number, yChange: number) => {
+    setShowKeyHint(false);
     const next = {
       x: Math.max(0, Math.min(8, shrimpPosition.x + xChange)),
       y: Math.max(0, Math.min(4, shrimpPosition.y + yChange)),
@@ -76,8 +100,20 @@ export const ShrimpTank = ({
     const remaining = food.filter(
       (pellet) => pellet.x !== next.x || pellet.y !== next.y,
     );
-    if (remaining.length !== food.length)
+    const atePellet = remaining.length !== food.length;
+    if (atePellet) {
       setScore((currentScore) => currentScore + 1);
+      setIsEating(true);
+      if (eatingTimerRef.current !== null)
+        window.clearTimeout(eatingTimerRef.current);
+      eatingTimerRef.current = window.setTimeout(() => setIsEating(false), 520);
+    }
+    if (xChange !== 0) setFacing(xChange < 0 ? "left" : "right");
+    setIsMoving(true);
+    setSwimFrame((frame) => (frame + 1) % 2);
+    if (movementTimerRef.current !== null)
+      window.clearTimeout(movementTimerRef.current);
+    movementTimerRef.current = window.setTimeout(() => setIsMoving(false), 420);
     setFood(remaining.length === 0 ? createFood(next) : remaining);
     setShrimpPosition(next);
   };
@@ -89,7 +125,16 @@ export const ShrimpTank = ({
     }
   }, [isOpen]);
 
-  useEffect(() => () => stopMusic(), []);
+  useEffect(
+    () => () => {
+      stopMusic();
+      if (movementTimerRef.current !== null)
+        window.clearTimeout(movementTimerRef.current);
+      if (eatingTimerRef.current !== null)
+        window.clearTimeout(eatingTimerRef.current);
+    },
+    [],
+  );
 
   const playAmbientChord = (context: AudioContext, root: number) => {
     [root, root * 1.25, root * 1.5].forEach((frequency, index) => {
@@ -144,6 +189,9 @@ export const ShrimpTank = ({
     setShowKeyHint(true);
     setShrimpPosition({ x: 1, y: 2 });
     setFood(createFood({ x: 1, y: 2 }));
+    setIsEating(false);
+    setIsMoving(false);
+    setFacing("right");
   };
 
   const toggleSound = () => {
@@ -198,7 +246,11 @@ export const ShrimpTank = ({
     >
       <Box
         sx={{
-          bgcolor: "#d9f2ef",
+          bgcolor: "#87d7dd",
+          backgroundImage:
+            "linear-gradient(rgba(218, 247, 244, .08), rgba(7, 79, 101, .08)), url('/shrimp-tank-background.png')",
+          backgroundPosition: "center",
+          backgroundSize: "cover",
           minHeight: "430px",
           position: "relative",
           overflow: "hidden",
@@ -233,12 +285,15 @@ export const ShrimpTank = ({
         >
           <CloseIcon />
         </IconButton>
-        <Box className="tank-bubble bubble-one" />
-        <Box className="tank-bubble bubble-two" />
-        <Box className="tank-bubble bubble-three" />
-        <Box className="tank-bubble bubble-four" />
-        <Box className="tank-bubble bubble-five" />
-        <Box className="tank-bubble bubble-six" />
+        {["one", "two", "three", "four", "five", "six"].map((bubble) => (
+          <Box
+            key={bubble}
+            component="img"
+            src="/shrimp-bubble.png"
+            alt=""
+            className={`tank-bubble bubble-${bubble}`}
+          />
+        ))}
         {showKeyHint && (
           <Typography
             component="h2"
@@ -287,6 +342,11 @@ export const ShrimpTank = ({
             {String(score).padStart(2, "0")}
           </Box>
         </Box>
+        {isPartyTime && (
+          <Typography className="party-message" aria-live="polite">
+            SHRIMPLY THE BEST!
+          </Typography>
+        )}
         {showKeyHint && (
           <Typography
             aria-label="Use the arrow keys to move"
@@ -316,6 +376,9 @@ export const ShrimpTank = ({
           {food.map((pellet) => (
             <Box
               key={`${pellet.x}-${pellet.y}`}
+              component="img"
+              src="/shrimp-pellet.png"
+              alt=""
               className="tank-food"
               sx={{
                 left: `calc(${pellet.x} * 11.5% + 4%)`,
@@ -331,13 +394,23 @@ export const ShrimpTank = ({
               top: `calc(${shrimpPosition.y} * 13% + 34%)`,
             }}
             isPartyTime={isPartyTime}
+            isEating={isEating}
+            isMoving={isMoving}
+            swimFrame={swimFrame}
+            facing={facing}
           />
         </Box>
-        <Shrimp className="tank-shrimp shrimp-two" isPartyTime={isPartyTime} />
-        <Box className="tank-plant plant-left" aria-hidden="true" />
-        <Box className="tank-plant plant-middle" aria-hidden="true" />
-        <Box className="tank-plant plant-right" aria-hidden="true" />
-        <Box className="tank-floor" aria-hidden="true" />
+        <Shrimp
+          className="tank-shrimp shrimp-two"
+          isPartyTime={isPartyTime}
+          facing="left"
+        />
+        <Box className="tank-controls" aria-label="Shrimp movement controls">
+          <Button aria-label="Move up" onClick={() => moveShrimp(0, -1)}>↑</Button>
+          <Button aria-label="Move left" onClick={() => moveShrimp(-1, 0)}>←</Button>
+          <Button aria-label="Move down" onClick={() => moveShrimp(0, 1)}>↓</Button>
+          <Button aria-label="Move right" onClick={() => moveShrimp(1, 0)}>→</Button>
+        </Box>
       </Box>
     </Dialog>
   );
