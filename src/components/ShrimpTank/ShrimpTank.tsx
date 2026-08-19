@@ -48,7 +48,9 @@ export const ShrimpTank = ({ isOpen, onClose }: ShrimpTankProps) => {
     if (game.move(xChange, yChange)) playCollection();
   };
 
-  const handleTankKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+  const returnFocusToTank = () => tankRef.current?.focus();
+
+  const handleTankKeyDown = (event: React.KeyboardEvent<HTMLElement>) => {
     const movement = MOVEMENTS[event.key];
     if (!movement) return;
     event.preventDefault();
@@ -59,6 +61,7 @@ export const ShrimpTank = ({ isOpen, onClose }: ShrimpTankProps) => {
     <Dialog
       open={isOpen}
       onClose={closeTank}
+      onKeyDown={handleTankKeyDown}
       maxWidth={isFocusMode ? "md" : "xs"}
       fullWidth
       slotProps={{
@@ -95,7 +98,10 @@ export const ShrimpTank = ({ isOpen, onClose }: ShrimpTankProps) => {
         <IconButton
           className="tank-interface sound-button"
           aria-label={isMuted ? "Unmute tank sounds" : "Mute tank sounds"}
-          onClick={toggleAudio}
+          onClick={() => {
+            toggleAudio();
+            returnFocusToTank();
+          }}
           sx={{
             position: "absolute",
             zIndex: 3,
@@ -110,7 +116,10 @@ export const ShrimpTank = ({ isOpen, onClose }: ShrimpTankProps) => {
         <IconButton
           className="tank-interface focus-button"
           aria-label={isFocusMode ? "Exit focus mode" : "Enter focus mode"}
-          onClick={() => setIsFocusMode((current) => !current)}
+          onClick={() => {
+            setIsFocusMode((current) => !current);
+            returnFocusToTank();
+          }}
           sx={{
             position: "absolute",
             zIndex: 3,
@@ -216,7 +225,6 @@ export const ShrimpTank = ({ isOpen, onClose }: ShrimpTankProps) => {
           role="application"
           aria-label="Shrimp tank game. Use the arrow keys to move the shrimp."
           tabIndex={0}
-          onKeyDown={handleTankKeyDown}
           sx={{ position: "absolute", inset: 0, zIndex: 2, outline: "none" }}
         >
           {game.food.map((pellet) => (
