@@ -239,28 +239,30 @@ export const ShrimpTank = ({
         <Box className="tank-bubble bubble-four" />
         <Box className="tank-bubble bubble-five" />
         <Box className="tank-bubble bubble-six" />
-        <Typography
-          component="h2"
-          sx={{
-            position: "relative",
-            zIndex: 2,
-            color: "#164a50",
-            fontFamily: "Georgia, serif",
-            fontSize: "2.6rem",
-            fontWeight: 400,
-            letterSpacing: "-.05em",
-            lineHeight: 1,
-            m: 0,
-          }}
-        >
-          Shrimp tank
-        </Typography>
+        {showKeyHint && (
+          <Typography
+            component="h2"
+            sx={{
+              position: "relative",
+              zIndex: 2,
+              color: "#164a50",
+              fontFamily: "Georgia, serif",
+              fontSize: "2.6rem",
+              fontWeight: 400,
+              letterSpacing: "-.05em",
+              lineHeight: 1,
+              m: 0,
+            }}
+          >
+            Shrimp tank
+          </Typography>
+        )}
         <Box
           aria-label={`Score: ${score}`}
           sx={{
             position: "absolute",
             zIndex: 3,
-            top: 78,
+            top: showKeyHint ? 78 : 28,
             left: 28,
             color: "#24585b",
             bgcolor: "rgba(255,255,255,.34)",
@@ -270,6 +272,7 @@ export const ShrimpTank = ({
             letterSpacing: ".1em",
             fontWeight: 700,
             textTransform: "uppercase",
+            transition: "top .3s ease",
           }}
         >
           score{" "}
