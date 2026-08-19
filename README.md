@@ -1,25 +1,46 @@
 # Resume Website
 
-This repository contains my personal resume and portfolio website, giving a brief overview of who I am, my experience, and the projects I work on.
+My personal resume and portfolio website, including an interactive shrimp-tank easter egg.
 
-I designed and built the site in Summer 2023 and continue to update and maintain it.
+The site is built with React, TypeScript, Material UI, and Vite.
 
-The site is built with React, TypeScript, and Material UI.
+**Website:** [lucyrandewich.co.uk](https://lucyrandewich.co.uk)
 
-**Website:** [lucyrandewich.co.uk](http://lucyrandewich.co.uk)
+## Running locally
 
-## Running Locally
-
-Install dependencies:
+Install dependencies and start the development server:
 
 ```bash
 npm install
+npm run dev
 ```
 
-Start the development server:
+Vite prints the local URL when the server starts (normally `http://localhost:5173`).
+
+## Project structure
+
+```text
+src/
+  assets/       Imported project images and documents
+  components/   Feature folders with rendering, data, types, and helpers
+  theme/        Central colour, typography, layout, and shadow tokens
+public/
+  assets/       Static favicons and shrimp-game artwork
+dist/           Tracked production output used by the deployment workflow
+```
+
+The Shrimp Tank keeps its game logic, audio hook, sprites, controls, constants, and CSS inside `src/components/ShrimpTank`.
+
+## Quality checks
 
 ```bash
-npm start
+npm run format:check
+npm run lint
+npm run build
 ```
 
-The site will then be available at `http://localhost:3000`.
+Run `npm run format` or `npm run lint:fix` to apply automatic fixes.
+
+## Deployment
+
+`npm run deploy` builds the application and publishes `dist` with `gh-pages`. The production build copies `public/CNAME` into `dist/CNAME`.

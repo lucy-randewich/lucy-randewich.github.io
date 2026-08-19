@@ -7,6 +7,10 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "preview": "vite preview",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier . --write",
+    "format:check": "prettier . --check",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d dist"
   },
@@ -16,17 +20,20 @@
     "@mui/icons-material": "latest",
     "@mui/material": "latest",
     "react": "latest",
-    "react-dom": "latest",
-    "react-parallax": "latest",
-    "react-scroll-parallax": "latest",
-    "typewriter-effect": "latest"
+    "react-dom": "latest"
   },
   "devDependencies": {
+    "@eslint/js": "^10.0.1",
     "@types/react": "latest",
     "@types/react-dom": "latest",
     "@vitejs/plugin-react": "latest",
+    "eslint": "^10.8.1",
+    "eslint-plugin-react-hooks": "^7.1.1",
     "gh-pages": "latest",
+    "globals": "^17.11.0",
+    "prettier": "^3.9.6",
     "typescript": "latest",
+    "typescript-eslint": "^8.67.0",
     "vite": "latest"
   }
 }

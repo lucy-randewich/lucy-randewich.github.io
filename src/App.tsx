@@ -1,15 +1,11 @@
-import { CssBaseline, ThemeProvider, createTheme } from '@mui/material';
+import { CssBaseline, ThemeProvider } from "@mui/material";
 
-import Header from './components/Header';
-import ProjectsPage from './components/Projects';
-import AboutPage from './components/About';
-import Timeline from './components/Timeline';
-import Contact from './components/Contact';
-
-const theme = createTheme({
-  palette: { background: { default: '#f7f5f1', paper: '#ffffff' }, text: { primary: '#171716', secondary: '#605e59' } },
-  typography: { fontFamily: 'Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif' },
-});
+import About from "./components/About";
+import Contact from "./components/Contact";
+import Header from "./components/Header";
+import Projects from "./components/Projects";
+import Timeline from "./components/Timeline";
+import { theme } from "./theme";
 
 const App = () => {
   return (
@@ -18,8 +14,8 @@ const App = () => {
       <div className="App">
         <Header />
         <main>
-          <AboutPage id="about" />
-          <ProjectsPage id="projects" />
+          <About id="about" />
+          <Projects id="projects" />
           <Timeline id="experience" />
         </main>
         <Contact id="contact" />
