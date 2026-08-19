@@ -29,6 +29,8 @@ export const theme = createTheme({
           "--tank-control-background": colors.tank.controlBackground,
           "--tank-control-border": colors.tank.controlBorder,
           "--tank-control-hover": colors.tank.controlHover,
+          "--tank-light": colors.tank.light,
+          "--tank-ripple": colors.tank.ripple,
         },
         html: { scrollBehavior: "smooth" },
         body: { margin: 0 },

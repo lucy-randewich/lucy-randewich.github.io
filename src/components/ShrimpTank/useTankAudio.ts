@@ -1,66 +1,119 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 
-const CHORD_ROOTS = [174.61, 196, 220, 196];
-const CHORD_INTERVAL_MS = 6500;
+const MASTER_VOLUME = 0.18;
+const AUDIO_FADE_MS = 1800;
+const AUDIO_LAYERS = [
+  { url: "/assets/shrimp/audio/relax-beat-arulo.mp3", volume: 0.12 },
+  {
+    url: "/assets/shrimp/audio/water-flowing-ambience-loop.mp3",
+    volume: 0.02,
+  },
+] as const;
 
-const playAmbientChord = (context: AudioContext, root: number) => {
-  [root, root * 1.25, root * 1.5].forEach((frequency, index) => {
+const playCollectionChime = (context: AudioContext, destination: AudioNode) => {
+  [659.25, 830.61].forEach((frequency, index) => {
+    const startAt = context.currentTime + index * 0.035;
     const oscillator = context.createOscillator();
     const gain = context.createGain();
-    oscillator.type = index === 0 ? "sine" : "triangle";
-    oscillator.frequency.setValueAtTime(frequency, context.currentTime);
-    oscillator.detune.setValueAtTime(index === 2 ? 5 : -3, context.currentTime);
-    gain.gain.setValueAtTime(0.0001, context.currentTime);
+    oscillator.type = "sine";
+    oscillator.frequency.value = frequency;
+    gain.gain.setValueAtTime(0.0001, startAt);
     gain.gain.exponentialRampToValueAtTime(
-      index === 0 ? 0.018 : 0.007,
-      context.currentTime + 1.4,
+      index === 0 ? 0.045 : 0.026,
+      startAt + 0.025,
     );
-    gain.gain.exponentialRampToValueAtTime(0.0001, context.currentTime + 6.7);
-    oscillator.connect(gain).connect(context.destination);
-    oscillator.start();
-    oscillator.stop(context.currentTime + 6.8);
+    gain.gain.exponentialRampToValueAtTime(0.0001, startAt + 0.85);
+    oscillator.connect(gain).connect(destination);
+    oscillator.start(startAt);
+    oscillator.stop(startAt + 0.9);
   });
 };
 
 export const useTankAudio = () => {
   const [isMuted, setIsMuted] = useState(false);
   const contextRef = useRef<AudioContext | null>(null);
-  const timerRef = useRef<number | null>(null);
+  const masterGainRef = useRef<GainNode | null>(null);
+  const audioLayersRef = useRef<HTMLAudioElement[]>([]);
+  const fadeFramesRef = useRef(new Map<HTMLAudioElement, number>());
+
+  const fadeInAudio = useCallback((audio: HTMLAudioElement, volume: number) => {
+    const startedAt = performance.now();
+
+    const fade = (now: number) => {
+      const progress = Math.min((now - startedAt) / AUDIO_FADE_MS, 1);
+      audio.volume = volume * progress;
+      if (progress < 1) {
+        fadeFramesRef.current.set(audio, requestAnimationFrame(fade));
+      } else {
+        fadeFramesRef.current.delete(audio);
+      }
+    };
+
+    fadeFramesRef.current.set(audio, requestAnimationFrame(fade));
+  }, []);
 
   const stop = useCallback(() => {
-    if (timerRef.current !== null) window.clearInterval(timerRef.current);
-    timerRef.current = null;
+    fadeFramesRef.current.forEach((frame) => cancelAnimationFrame(frame));
+    fadeFramesRef.current.clear();
+    audioLayersRef.current.forEach((audio) => {
+      audio.pause();
+      audio.currentTime = 0;
+    });
+    audioLayersRef.current = [];
     if (contextRef.current) void contextRef.current.close();
     contextRef.current = null;
+    masterGainRef.current = null;
   }, []);
 
   const start = useCallback(() => {
     stop();
     const context = new AudioContext();
+    const masterGain = context.createGain();
+    masterGain.gain.value = MASTER_VOLUME;
+    masterGain.connect(context.destination);
     contextRef.current = context;
-    let chordIndex = 0;
-    const playNext = () => {
-      playAmbientChord(context, CHORD_ROOTS[chordIndex % CHORD_ROOTS.length]);
-      chordIndex += 1;
-    };
-    playNext();
-    timerRef.current = window.setInterval(playNext, CHORD_INTERVAL_MS);
+    masterGainRef.current = masterGain;
+
+    audioLayersRef.current = AUDIO_LAYERS.map(({ url, volume }) => {
+      const audio = new Audio(url);
+      audio.loop = true;
+      audio.preload = "auto";
+      audio.volume = 0;
+      void audio
+        .play()
+        .then(() => fadeInAudio(audio, volume))
+        .catch(() => {
+          // Browsers may block audio if opening the tank was not treated as a gesture.
+        });
+      return audio;
+    });
     setIsMuted(false);
-  }, [stop]);
+  }, [fadeInAudio, stop]);
 
   const toggle = useCallback(() => {
     const context = contextRef.current;
     if (!context) return;
     if (context.state === "running") {
       void context.suspend();
+      audioLayersRef.current.forEach((audio) => audio.pause());
       setIsMuted(true);
     } else {
       void context.resume();
+      audioLayersRef.current.forEach((audio) => {
+        void audio.play().catch(() => undefined);
+      });
       setIsMuted(false);
     }
   }, []);
 
+  const playCollection = useCallback(() => {
+    const context = contextRef.current;
+    const destination = masterGainRef.current;
+    if (!context || !destination || context.state !== "running") return;
+    playCollectionChime(context, destination);
+  }, []);
+
   useEffect(() => stop, [stop]);
 
-  return { isMuted, start, stop, toggle };
+  return { isMuted, playCollection, start, stop, toggle };
 };

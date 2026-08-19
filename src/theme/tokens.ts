@@ -21,6 +21,8 @@ export const colors = {
     controlBackground: "rgb(231 255 250 / 72%)",
     controlBorder: "rgb(22 74 80 / 24%)",
     controlHover: "rgb(255 255 255 / 94%)",
+    light: "rgb(255 255 255 / 12%)",
+    ripple: "rgb(231 255 250 / 82%)",
   },
 } as const;
 

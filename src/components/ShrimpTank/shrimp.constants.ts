@@ -2,7 +2,7 @@ import type { Movement, TankCell } from "./shrimp.types";
 
 export const GRID_COLUMNS = 9;
 export const GRID_ROWS = 5;
-export const FOOD_COUNT = 3;
+export const FOOD_COUNT = 1;
 export const PARTY_SCORE = 67;
 export const START_POSITION: TankCell = { x: 1, y: 2 };
 
@@ -13,14 +13,7 @@ export const MOVEMENTS: Record<string, Movement> = {
   ArrowRight: [1, 0],
 };
 
-export const BUBBLE_NAMES = [
-  "one",
-  "two",
-  "three",
-  "four",
-  "five",
-  "six",
-] as const;
+export const BUBBLE_NAMES = ["one", "two", "three", "four"] as const;
 
 export const shrimpAssets = {
   background: "/assets/shrimp/background/tank.webp",

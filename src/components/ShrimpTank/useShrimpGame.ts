@@ -13,6 +13,10 @@ export const useShrimpGame = () => {
   const [isMoving, setIsMoving] = useState(false);
   const [swimFrame, setSwimFrame] = useState(0);
   const [facing, setFacing] = useState<ShrimpDirection>("right");
+  const [collectionEffect, setCollectionEffect] = useState<{
+    id: number;
+    position: TankCell;
+  } | null>(null);
   const movementTimerRef = useRef<number | null>(null);
   const eatingTimerRef = useRef<number | null>(null);
 
@@ -41,6 +45,7 @@ export const useShrimpGame = () => {
           () => setIsEating(false),
           520,
         );
+        setCollectionEffect({ id: Date.now(), position: next });
       }
       if (xChange !== 0) setFacing(xChange < 0 ? "left" : "right");
       setIsMoving(true);
@@ -49,10 +54,11 @@ export const useShrimpGame = () => {
         window.clearTimeout(movementTimerRef.current);
       movementTimerRef.current = window.setTimeout(
         () => setIsMoving(false),
-        420,
+        680,
       );
       setFood(remainingFood.length === 0 ? createFood(next) : remainingFood);
       setShrimpPosition(next);
+      return atePellet;
     },
     [food, shrimpPosition],
   );
@@ -67,11 +73,13 @@ export const useShrimpGame = () => {
     setIsMoving(false);
     setSwimFrame(0);
     setFacing("right");
+    setCollectionEffect(null);
   }, [clearTimers]);
 
   useEffect(() => clearTimers, [clearTimers]);
 
   return {
+    collectionEffect,
     facing,
     food,
     hasStarted,

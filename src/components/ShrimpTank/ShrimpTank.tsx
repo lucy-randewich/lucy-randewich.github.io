@@ -1,5 +1,7 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
+import FullscreenIcon from "@mui/icons-material/Fullscreen";
+import FullscreenExitIcon from "@mui/icons-material/FullscreenExit";
 import VolumeOffIcon from "@mui/icons-material/VolumeOff";
 import VolumeUpIcon from "@mui/icons-material/VolumeUp";
 import { alpha, Box, Dialog, IconButton, Typography } from "@mui/material";
@@ -18,8 +20,10 @@ interface ShrimpTankProps {
 
 export const ShrimpTank = ({ isOpen, onClose }: ShrimpTankProps) => {
   const tankRef = useRef<HTMLDivElement>(null);
+  const [isFocusMode, setIsFocusMode] = useState(false);
   const {
     isMuted,
+    playCollection,
     start: startAudio,
     stop: stopAudio,
     toggle: toggleAudio,
@@ -37,23 +41,34 @@ export const ShrimpTank = ({ isOpen, onClose }: ShrimpTankProps) => {
     onClose();
     stopAudio();
     game.reset();
+    setIsFocusMode(false);
+  };
+
+  const moveShrimp = (xChange: number, yChange: number) => {
+    if (game.move(xChange, yChange)) playCollection();
   };
 
   const handleTankKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
     const movement = MOVEMENTS[event.key];
     if (!movement) return;
     event.preventDefault();
-    game.move(...movement);
+    moveShrimp(...movement);
   };
 
   return (
     <Dialog
       open={isOpen}
       onClose={closeTank}
-      maxWidth="xs"
+      maxWidth={isFocusMode ? "md" : "xs"}
       fullWidth
       slotProps={{
-        paper: { sx: { overflow: "hidden", boxShadow: shadows.dialog } },
+        paper: {
+          sx: {
+            overflow: "hidden",
+            boxShadow: shadows.dialog,
+            transition: "max-width .6s ease, width .6s ease",
+          },
+        },
         backdrop: {
           sx: {
             bgcolor: alpha(colors.ink, 0.38),
@@ -64,20 +79,38 @@ export const ShrimpTank = ({ isOpen, onClose }: ShrimpTankProps) => {
       }}
     >
       <Box
+        className={`tank-shell${game.hasStarted ? " has-started" : ""}`}
         sx={{
           bgcolor: colors.tank.water,
           backgroundImage: `linear-gradient(${alpha(colors.paper, 0.08)}, ${alpha(colors.tank.ink, 0.08)}), url('${shrimpAssets.background}')`,
           backgroundPosition: "center",
           backgroundSize: "cover",
-          minHeight: 430,
+          minHeight: isFocusMode ? { xs: 520, md: 620 } : 430,
           position: "relative",
           overflow: "hidden",
           p: 3.5,
         }}
       >
+        <Box className="tank-light" aria-hidden="true" />
         <IconButton
-          aria-label={isMuted ? "Unmute tank music" : "Mute tank music"}
+          className="tank-interface sound-button"
+          aria-label={isMuted ? "Unmute tank sounds" : "Mute tank sounds"}
           onClick={toggleAudio}
+          sx={{
+            position: "absolute",
+            zIndex: 3,
+            right: 94,
+            top: 12,
+            color: colors.tank.ink,
+            "&:hover": { bgcolor: alpha(colors.paper, 0.45) },
+          }}
+        >
+          {isMuted ? <VolumeOffIcon /> : <VolumeUpIcon />}
+        </IconButton>
+        <IconButton
+          className="tank-interface focus-button"
+          aria-label={isFocusMode ? "Exit focus mode" : "Enter focus mode"}
+          onClick={() => setIsFocusMode((current) => !current)}
           sx={{
             position: "absolute",
             zIndex: 3,
@@ -87,9 +120,10 @@ export const ShrimpTank = ({ isOpen, onClose }: ShrimpTankProps) => {
             "&:hover": { bgcolor: alpha(colors.paper, 0.45) },
           }}
         >
-          {isMuted ? <VolumeOffIcon /> : <VolumeUpIcon />}
+          {isFocusMode ? <FullscreenExitIcon /> : <FullscreenIcon />}
         </IconButton>
         <IconButton
+          className="tank-interface close-button"
           aria-label="Close shrimp tank"
           onClick={closeTank}
           sx={{
@@ -129,6 +163,7 @@ export const ShrimpTank = ({ isOpen, onClose }: ShrimpTankProps) => {
           </Typography>
         )}
         <Box
+          className="tank-score tank-interface"
           aria-label={`Score: ${game.score}`}
           sx={{
             position: "absolute",
@@ -197,6 +232,16 @@ export const ShrimpTank = ({ isOpen, onClose }: ShrimpTankProps) => {
               }}
             />
           ))}
+          {game.collectionEffect && (
+            <Box
+              key={game.collectionEffect.id}
+              className="collection-ripple"
+              sx={{
+                left: `calc(${game.collectionEffect.position.x} * 11.5% + 4%)`,
+                top: `calc(${game.collectionEffect.position.y} * 13% + 34%)`,
+              }}
+            />
+          )}
           <ShrimpSprite
             className="game-shrimp"
             label="Your cherry shrimp"
@@ -216,7 +261,7 @@ export const ShrimpTank = ({ isOpen, onClose }: ShrimpTankProps) => {
           isPartyTime={game.isPartyTime}
           facing="left"
         />
-        <ShrimpControls onMove={game.move} />
+        <ShrimpControls onMove={moveShrimp} />
       </Box>
     </Dialog>
   );
