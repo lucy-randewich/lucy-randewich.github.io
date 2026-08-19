@@ -26,6 +26,18 @@ export const colors = {
   },
 } as const;
 
+export const darkColors = {
+  ink: "#f1eee8",
+  inkMuted: "#b8b3aa",
+  canvas: "#161513",
+  paper: "#211f1c",
+  surfaceMuted: "#1c1a18",
+  accent: "#d98289",
+  accentSoft: "#e7a7a9",
+  border: "#393632",
+  borderStrong: "#48433e",
+} as const;
+
 export const fonts = {
   body: 'Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
   display: 'Georgia, "Times New Roman", serif',

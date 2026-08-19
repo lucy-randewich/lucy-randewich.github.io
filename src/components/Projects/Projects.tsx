@@ -1,5 +1,5 @@
 import { Box } from "@mui/material";
-import { colors, layout } from "../../theme";
+import { layout } from "../../theme";
 import { SectionEyebrow, SectionHeading } from "../shared";
 import { ProjectCard } from "./ProjectCard";
 import { projects } from "./projects.data";
@@ -12,7 +12,7 @@ export const Projects = ({ id }: ProjectsProps) => (
   <section id={id}>
     <Box
       sx={{
-        bgcolor: colors.surfaceMuted,
+        bgcolor: "action.hover",
         py: { xs: 8, md: 12 },
         px: { xs: 2.5, md: 4 },
       }}

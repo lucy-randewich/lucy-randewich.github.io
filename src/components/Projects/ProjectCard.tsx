@@ -1,13 +1,14 @@
 import ArrowOutwardIcon from "@mui/icons-material/ArrowOutward";
 import { Box, Button, Typography } from "@mui/material";
-import { colors, shadows } from "../../theme";
+import { shadows } from "../../theme";
 import type { Project } from "./projects.types";
 
 export const ProjectCard = ({ project }: { project: Project }) => (
   <Box
     sx={{
       bgcolor: "background.paper",
-      border: `1px solid ${colors.border}`,
+      border: 1,
+      borderColor: "divider",
       display: "flex",
       flexDirection: { xs: "column", lg: "row" },
       minHeight: 310,

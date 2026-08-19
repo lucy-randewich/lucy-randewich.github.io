@@ -1,5 +1,5 @@
 import { Box } from "@mui/material";
-import { colors, layout } from "../../theme";
+import { layout } from "../../theme";
 import { SectionEyebrow, SectionHeading } from "../shared";
 import { timelineEntries } from "./timeline.data";
 import { TimelineItem } from "./TimelineItem";
@@ -22,7 +22,7 @@ export const Timeline = ({ id }: TimelineProps) => (
       <SectionHeading marginBottom={{ xs: 5, md: 7 }}>
         Grounded in research, moved to production.
       </SectionHeading>
-      <Box sx={{ borderTop: `1px solid ${colors.borderStrong}` }}>
+      <Box sx={{ borderTop: 1, borderColor: "divider" }}>
         {timelineEntries.map((entry) => (
           <TimelineItem key={entry.title} entry={entry} />
         ))}

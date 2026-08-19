@@ -1,5 +1,4 @@
 import { Box, Typography } from "@mui/material";
-import { colors } from "../../theme";
 import type { TimelineEntry } from "./timeline.types";
 
 export const TimelineItem = ({ entry }: { entry: TimelineEntry }) => (
@@ -9,7 +8,8 @@ export const TimelineItem = ({ entry }: { entry: TimelineEntry }) => (
       gridTemplateColumns: { xs: "1fr", md: "190px 1fr 1.3fr" },
       gap: { xs: 1, md: 4 },
       py: { xs: 3, md: 4.5 },
-      borderBottom: `1px solid ${colors.borderStrong}`,
+      borderBottom: 1,
+      borderColor: "divider",
     }}
   >
     <Typography

@@ -1,10 +1,18 @@
+import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
+import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
 import { useState } from "react";
-import { alpha, AppBar, Box, Button, Toolbar } from "@mui/material";
-import { colors, layout } from "../../theme";
+import { alpha, AppBar, Box, Button, IconButton, Toolbar } from "@mui/material";
+import type { PaletteMode } from "@mui/material";
+import { layout } from "../../theme";
 import { ShrimpTank } from "../ShrimpTank";
 import { navigationItems } from "./navigation";
 
-export const Header = () => {
+interface HeaderProps {
+  mode: PaletteMode;
+  onToggleMode: () => void;
+}
+
+export const Header = ({ mode, onToggleMode }: HeaderProps) => {
   const [isTankOpen, setIsTankOpen] = useState(false);
 
   const scrollToSection = (sectionId: string) =>
@@ -15,12 +23,12 @@ export const Header = () => {
       <AppBar
         position="sticky"
         elevation={0}
-        sx={{
-          bgcolor: alpha(colors.canvas, 0.92),
+        sx={(theme) => ({
+          bgcolor: alpha(theme.palette.background.default, 0.92),
           color: "text.primary",
           backdropFilter: "blur(12px)",
-          borderBottom: `1px solid ${colors.border}`,
-        }}
+          borderBottom: `1px solid ${theme.palette.divider}`,
+        })}
       >
         <Toolbar
           sx={{
@@ -76,6 +84,20 @@ export const Header = () => {
                 {label}
               </Button>
             ))}
+            <IconButton
+              onClick={onToggleMode}
+              aria-label={`Switch to ${mode === "light" ? "dark" : "light"} mode`}
+              title={`Switch to ${mode === "light" ? "dark" : "light"} mode`}
+              color="inherit"
+              size="small"
+              sx={{ ml: { xs: 0.25, sm: 0.75 } }}
+            >
+              {mode === "light" ? (
+                <DarkModeOutlinedIcon fontSize="small" />
+              ) : (
+                <LightModeOutlinedIcon fontSize="small" />
+              )}
+            </IconButton>
           </Box>
         </Toolbar>
       </AppBar>

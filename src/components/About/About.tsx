@@ -4,7 +4,7 @@ import profileImage1024 from "../../assets/images/profile/lucy-randewich-1024.we
 import profileImage480 from "../../assets/images/profile/lucy-randewich-480.webp";
 import profileImage768 from "../../assets/images/profile/lucy-randewich-768.webp";
 import cv from "../../assets/documents/lucy-randewich-cv.pdf";
-import { colors, layout } from "../../theme";
+import { layout } from "../../theme";
 import { profileFacts } from "./about.constants";
 
 interface AboutProps {
@@ -58,7 +58,8 @@ export const About = ({ id }: AboutProps) => (
             href="#projects"
             variant="contained"
             sx={{
-              bgcolor: colors.ink,
+              bgcolor: "text.primary",
+              color: "background.default",
               px: 2.5,
               py: 1.25,
               "&:hover": { bgcolor: "primary.main" },
@@ -74,8 +75,8 @@ export const About = ({ id }: AboutProps) => (
             variant="outlined"
             endIcon={<ArrowOutwardIcon />}
             sx={{
-              borderColor: colors.ink,
-              color: colors.ink,
+              borderColor: "text.primary",
+              color: "text.primary",
               px: 2.5,
               py: 1.25,
               "&:hover": {
@@ -92,7 +93,8 @@ export const About = ({ id }: AboutProps) => (
           sx={{
             display: "grid",
             gridTemplateColumns: { xs: "1fr", sm: "repeat(3, 1fr)" },
-            borderTop: `1px solid ${colors.borderStrong}`,
+            borderTop: 1,
+            borderColor: "divider",
             mt: 7,
             pt: 2.5,
             gap: 2.5,

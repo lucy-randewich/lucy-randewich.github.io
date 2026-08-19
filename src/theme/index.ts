@@ -1,2 +1,2 @@
-export { theme } from "./theme";
-export { colors, fonts, layout, shadows } from "./tokens";
+export { createAppTheme } from "./theme";
+export { colors, darkColors, fonts, layout, shadows } from "./tokens";
