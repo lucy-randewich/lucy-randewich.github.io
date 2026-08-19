@@ -1,6 +1,8 @@
 import ArrowOutwardIcon from "@mui/icons-material/ArrowOutward";
 import { Box, Button, Typography } from "@mui/material";
-import profileImage from "../../assets/images/profile/lucy-randewich.webp";
+import profileImage1024 from "../../assets/images/profile/lucy-randewich-1024.webp";
+import profileImage480 from "../../assets/images/profile/lucy-randewich-480.webp";
+import profileImage768 from "../../assets/images/profile/lucy-randewich-768.webp";
 import cv from "../../assets/documents/lucy-randewich-cv.pdf";
 import { colors, layout } from "../../theme";
 import { profileFacts } from "./about.constants";
@@ -55,7 +57,6 @@ export const About = ({ id }: AboutProps) => (
             component="a"
             href="#projects"
             variant="contained"
-            endIcon={<ArrowOutwardIcon />}
             sx={{
               bgcolor: colors.ink,
               px: 2.5,
@@ -71,6 +72,7 @@ export const About = ({ id }: AboutProps) => (
             target="_blank"
             rel="noopener noreferrer"
             variant="outlined"
+            endIcon={<ArrowOutwardIcon />}
             sx={{
               borderColor: colors.ink,
               color: colors.ink,
@@ -83,7 +85,7 @@ export const About = ({ id }: AboutProps) => (
               },
             }}
           >
-            Download CV
+            Open CV
           </Button>
         </Box>
         <Box
@@ -132,10 +134,15 @@ export const About = ({ id }: AboutProps) => (
       >
         <Box
           component="img"
-          src={profileImage}
+          src={profileImage768}
+          srcSet={`${profileImage480} 480w, ${profileImage768} 768w, ${profileImage1024} 1024w`}
+          sizes="(max-width: 899px) calc(100vw - 40px), 36vw"
           alt="Lucy Randewich"
-          width={1537}
-          height={2305}
+          width={768}
+          height={960}
+          loading="eager"
+          fetchPriority="high"
+          decoding="async"
           sx={{
             display: "block",
             width: "100%",
