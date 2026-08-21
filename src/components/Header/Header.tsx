@@ -4,7 +4,7 @@ import { useState } from "react";
 import { alpha, AppBar, Box, Button, IconButton, Toolbar } from "@mui/material";
 import type { PaletteMode } from "@mui/material";
 import { layout } from "../../theme";
-import { ShrimpTank } from "../ShrimpTank";
+import { ShrimpLeaderboard, ShrimpTank } from "../ShrimpTank";
 import { navigationItems } from "./navigation";
 
 interface HeaderProps {
@@ -14,6 +14,7 @@ interface HeaderProps {
 
 export const Header = ({ mode, onToggleMode }: HeaderProps) => {
   const [isTankOpen, setIsTankOpen] = useState(false);
+  const [leaderboardScore, setLeaderboardScore] = useState<number | null>(null);
 
   const scrollToSection = (sectionId: string) =>
     document.getElementById(sectionId)?.scrollIntoView({ behavior: "smooth" });
@@ -101,7 +102,20 @@ export const Header = ({ mode, onToggleMode }: HeaderProps) => {
           </Box>
         </Toolbar>
       </AppBar>
-      <ShrimpTank isOpen={isTankOpen} onClose={() => setIsTankOpen(false)} />
+      <ShrimpTank
+        isOpen={isTankOpen}
+        onOpenLeaderboard={() => setLeaderboardScore(0)}
+        onClose={(score) => {
+          setIsTankOpen(false);
+          setLeaderboardScore(score);
+        }}
+      />
+      {leaderboardScore !== null && (
+        <ShrimpLeaderboard
+          score={leaderboardScore}
+          onClose={() => setLeaderboardScore(null)}
+        />
+      )}
     </>
   );
 };

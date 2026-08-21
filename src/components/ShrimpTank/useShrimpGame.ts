@@ -37,7 +37,8 @@ export const useShrimpGame = () => {
       const atePellet = remainingFood.length !== food.length;
 
       if (atePellet) {
-        setScore((currentScore) => currentScore + 1);
+        const nextScore = score + 1;
+        setScore(nextScore);
         setIsEating(true);
         if (eatingTimerRef.current !== null)
           window.clearTimeout(eatingTimerRef.current);
@@ -60,7 +61,7 @@ export const useShrimpGame = () => {
       setShrimpPosition(next);
       return atePellet;
     },
-    [food, shrimpPosition],
+    [food, score, shrimpPosition],
   );
 
   const reset = useCallback(() => {

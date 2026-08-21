@@ -37,7 +37,7 @@ export const About = ({ id }: AboutProps) => (
             m: 0,
           }}
         >
-          Building reliable systems rapidly.
+          Rapidly building reliable systems.
         </Typography>
         <Typography
           sx={{

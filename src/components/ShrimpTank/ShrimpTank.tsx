@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import FullscreenIcon from "@mui/icons-material/Fullscreen";
 import FullscreenExitIcon from "@mui/icons-material/FullscreenExit";
+import LeaderboardOutlinedIcon from "@mui/icons-material/LeaderboardOutlined";
 import VolumeOffIcon from "@mui/icons-material/VolumeOff";
 import VolumeUpIcon from "@mui/icons-material/VolumeUp";
 import { alpha, Box, Dialog, IconButton, Typography } from "@mui/material";
@@ -10,15 +11,21 @@ import { BUBBLE_NAMES, MOVEMENTS, shrimpAssets } from "./shrimp.constants";
 import { ShrimpControls } from "./ShrimpControls";
 import { ShrimpSprite } from "./ShrimpSprite";
 import { useShrimpGame } from "./useShrimpGame";
+import { useShrimpHighScores } from "./useShrimpHighScores";
 import { useTankAudio } from "./useTankAudio";
 import "./ShrimpTank.css";
 
 interface ShrimpTankProps {
   isOpen: boolean;
-  onClose: () => void;
+  onClose: (score: number) => void;
+  onOpenLeaderboard: () => void;
 }
 
-export const ShrimpTank = ({ isOpen, onClose }: ShrimpTankProps) => {
+export const ShrimpTank = ({
+  isOpen,
+  onClose,
+  onOpenLeaderboard,
+}: ShrimpTankProps) => {
   const tankRef = useRef<HTMLDivElement>(null);
   const [isFocusMode, setIsFocusMode] = useState(false);
   const {
@@ -29,6 +36,7 @@ export const ShrimpTank = ({ isOpen, onClose }: ShrimpTankProps) => {
     toggle: toggleAudio,
   } = useTankAudio();
   const game = useShrimpGame();
+  const highScores = useShrimpHighScores(isOpen);
 
   useEffect(() => {
     if (!isOpen) return;
@@ -38,7 +46,7 @@ export const ShrimpTank = ({ isOpen, onClose }: ShrimpTankProps) => {
   }, [isOpen, startAudio]);
 
   const closeTank = () => {
-    onClose();
+    onClose(game.score);
     stopAudio();
     game.reset();
     setIsFocusMode(false);
@@ -95,6 +103,25 @@ export const ShrimpTank = ({ isOpen, onClose }: ShrimpTankProps) => {
         }}
       >
         <Box className="tank-light" aria-hidden="true" />
+        <IconButton
+          className="tank-interface leaderboard-button"
+          aria-label="Show leaderboard"
+          title="Show leaderboard"
+          onClick={() => {
+            onOpenLeaderboard();
+            returnFocusToTank();
+          }}
+          sx={{
+            position: "absolute",
+            zIndex: 3,
+            right: 135,
+            top: 12,
+            color: colors.tank.ink,
+            "&:hover": { bgcolor: alpha(colors.paper, 0.45) },
+          }}
+        >
+          <LeaderboardOutlinedIcon />
+        </IconButton>
         <IconButton
           className="tank-interface sound-button"
           aria-label={isMuted ? "Unmute tank sounds" : "Mute tank sounds"}
@@ -173,7 +200,9 @@ export const ShrimpTank = ({ isOpen, onClose }: ShrimpTankProps) => {
         )}
         <Box
           className="tank-score tank-interface"
-          aria-label={`Score: ${game.score}`}
+          aria-label={`Score: ${game.score}. High score: ${
+            highScores.worldRecord ?? "unavailable"
+          }.`}
           sx={{
             position: "absolute",
             zIndex: 3,
@@ -196,6 +225,22 @@ export const ShrimpTank = ({ isOpen, onClose }: ShrimpTankProps) => {
             sx={{ fontFamily: "h2.fontFamily", fontSize: ".95rem", ml: 0.35 }}
           >
             {String(game.score).padStart(2, "0")}
+          </Box>
+          <Box
+            component="span"
+            sx={{
+              display: "block",
+              mt: 0.15,
+              fontSize: ".52rem",
+              letterSpacing: ".07em",
+              opacity: 0.82,
+              textTransform: "lowercase",
+            }}
+          >
+            high score{" "}
+            {highScores.worldRecord === null
+              ? "—"
+              : String(highScores.worldRecord).padStart(2, "0")}
           </Box>
         </Box>
         {game.isPartyTime && (
