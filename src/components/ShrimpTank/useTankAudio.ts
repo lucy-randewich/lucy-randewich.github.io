@@ -40,7 +40,10 @@ export const useTankAudio = () => {
     const startedAt = performance.now();
 
     const fade = (now: number) => {
-      const progress = Math.min((now - startedAt) / AUDIO_FADE_MS, 1);
+      const progress = Math.min(
+        Math.max((now - startedAt) / AUDIO_FADE_MS, 0),
+        1,
+      );
       audio.volume = volume * progress;
       if (progress < 1) {
         fadeFramesRef.current.set(audio, requestAnimationFrame(fade));

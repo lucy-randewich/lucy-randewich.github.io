@@ -180,14 +180,17 @@ export const ShrimpTank = ({
             src={shrimpAssets.bubble}
             alt=""
             className={`tank-bubble bubble-${bubble}`}
+            draggable={false}
           />
         ))}
         {!game.hasStarted && (
           <Typography
             component="h2"
             sx={{
-              position: "relative",
+              position: "absolute",
               zIndex: 2,
+              top: 11,
+              left: 28,
               color: colors.tank.ink,
               fontSize: "2.6rem",
               letterSpacing: "-.05em",
@@ -250,19 +253,41 @@ export const ShrimpTank = ({
         )}
         {!game.hasStarted && (
           <Typography
+            className="keyboard-hint"
             aria-label="Use the arrow keys to move"
             sx={{
               position: "absolute",
               zIndex: 3,
-              top: 79,
+              top: { xs: 122, sm: 76 },
               right: 28,
               color: colors.tank.hint,
-              fontSize: ".78rem",
-              letterSpacing: ".2em",
-              opacity: 0.85,
+              bgcolor: alpha(colors.paper, 0.48),
+              border: `1px solid ${alpha(colors.tank.ink, 0.16)}`,
+              borderRadius: 1.5,
+              px: 1.25,
+              py: 0.75,
+              fontSize: ".62rem",
+              fontWeight: 800,
+              letterSpacing: ".08em",
+              lineHeight: 1.2,
+              textAlign: "center",
+              textTransform: "uppercase",
+              boxShadow: `0 4px 14px ${alpha(colors.tank.ink, 0.08)}`,
             }}
           >
-            ← ↑ ↓ →
+            Use arrow keys to swim
+            <Box
+              component="span"
+              sx={{
+                display: "block",
+                mt: 0.45,
+                fontSize: "1rem",
+                letterSpacing: ".18em",
+                lineHeight: 1,
+              }}
+            >
+              ← ↑ ↓ →
+            </Box>
           </Typography>
         )}
         <Box
@@ -279,6 +304,7 @@ export const ShrimpTank = ({
               src={shrimpAssets.pellet}
               alt=""
               className="tank-food"
+              draggable={false}
               sx={{
                 left: `calc(${pellet.x} * 11.5% + 4%)`,
                 top: `calc(${pellet.y} * 13% + 34%)`,

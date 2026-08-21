@@ -5,6 +5,7 @@ import { alpha, AppBar, Box, Button, IconButton, Toolbar } from "@mui/material";
 import type { PaletteMode } from "@mui/material";
 import { layout } from "../../theme";
 import { ShrimpLeaderboard, ShrimpTank } from "../ShrimpTank";
+import { shrimpAssets } from "../ShrimpTank/shrimp.constants";
 import { navigationItems } from "./navigation";
 
 interface HeaderProps {
@@ -42,14 +43,14 @@ export const Header = ({ mode, onToggleMode }: HeaderProps) => {
         >
           <Box
             component="button"
-            onClick={() => setIsTankOpen(true)}
-            aria-label="Open Lucy's shrimp tank"
+            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+            aria-label="Back to top"
             sx={{
               border: 0,
               bgcolor: "transparent",
               p: 0,
-              cursor: "pointer",
               color: "inherit",
+              cursor: "pointer",
               fontWeight: 700,
               fontSize: "1rem",
               letterSpacing: "-.03em",
@@ -72,6 +73,7 @@ export const Header = ({ mode, onToggleMode }: HeaderProps) => {
                 key={sectionId}
                 onClick={() => scrollToSection(sectionId)}
                 sx={{
+                  display: { xs: "none", sm: "inline-flex" },
                   color: "inherit",
                   minWidth: 0,
                   px: { xs: 1, sm: 1.5 },
@@ -85,6 +87,52 @@ export const Header = ({ mode, onToggleMode }: HeaderProps) => {
                 {label}
               </Button>
             ))}
+            <Button
+              onClick={() => setIsTankOpen(true)}
+              sx={{
+                position: "relative",
+                overflow: "visible",
+                color: "inherit",
+                minWidth: 0,
+                px: 1.5,
+                fontSize: ".84rem",
+                "&:hover": {
+                  color: "primary.main",
+                  bgcolor: "transparent",
+                },
+                "& .tank-link-shrimp": {
+                  position: "absolute",
+                  zIndex: -1,
+                  left: "50%",
+                  bottom: -24,
+                  width: 42,
+                  height: "auto",
+                  opacity: 0,
+                  pointerEvents: "none",
+                  imageRendering: "pixelated",
+                  transform: "translate(-50%, 9px) rotate(-5deg)",
+                  transition: "opacity .2s ease, transform .3s ease",
+                },
+                "&:hover .tank-link-shrimp, &:focus-visible .tank-link-shrimp":
+                  {
+                    opacity: 1,
+                    transform: "translate(-50%, 0) rotate(-5deg)",
+                  },
+                "@media (prefers-reduced-motion: reduce)": {
+                  "& .tank-link-shrimp": { transition: "none" },
+                },
+              }}
+            >
+              Tank
+              <Box
+                component="img"
+                className="tank-link-shrimp"
+                src={shrimpAssets.idle}
+                alt=""
+                aria-hidden="true"
+                draggable={false}
+              />
+            </Button>
             <IconButton
               onClick={onToggleMode}
               aria-label={`Switch to ${mode === "light" ? "dark" : "light"} mode`}

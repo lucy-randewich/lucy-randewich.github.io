@@ -48,8 +48,8 @@ export const About = ({ id }: AboutProps) => (
             maxWidth: 590,
           }}
         >
-          I’m a full-stack software engineer at Laka, with experience across
-          production insurance systems, machine-learning applications and
+          I’m a Full-Stack Software Engineer with experience across
+          insurance systems, machine-learning applications and
           cyber-security research tooling.
         </Typography>
         <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1.5, mt: 4 }}>

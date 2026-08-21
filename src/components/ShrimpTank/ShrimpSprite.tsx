@@ -38,6 +38,7 @@ export const ShrimpSprite = ({
       className={className}
       aria-label={label}
       alt={label ?? ""}
+      draggable={false}
       style={style}
       sx={{
         objectFit: "contain",

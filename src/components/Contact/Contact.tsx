@@ -38,7 +38,7 @@ export const Contact = ({ id }: ContactProps) => (
             maxWidth: 720,
           }}
         >
-          Interested in working together?
+          Wanna work together?
         </Typography>
         <Link
           href="mailto:lucyrandewich@gmail.com"

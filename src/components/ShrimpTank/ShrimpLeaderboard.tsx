@@ -112,7 +112,13 @@ export const ShrimpLeaderboard = ({
       >
         <CloseIcon />
       </IconButton>
-      <DialogContent sx={{ p: { xs: 2.5, sm: 3 }, pt: { xs: 5, sm: 5 } }}>
+      <DialogContent
+        sx={{
+          px: { xs: 2.5, sm: 3 },
+          pb: { xs: 2.5, sm: 3 },
+          pt: hasHighScore ? 5 : 2,
+        }}
+      >
         {!isSupabaseConfigured || hasError ? (
           <Typography color="text.secondary">
             The leaderboard is taking a little rest. Please try again later.
@@ -167,13 +173,13 @@ export const ShrimpLeaderboard = ({
                       pellets
                     </Typography>
                   </Box>
-              <Box
-                sx={{
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "center",
-                }}
-              >
+                  <Box
+                    sx={{
+                      display: "flex",
+                      flexDirection: "column",
+                      justifyContent: "center",
+                    }}
+                  >
                     <TextField
                       autoFocus
                       fullWidth
@@ -244,11 +250,11 @@ export const ShrimpLeaderboard = ({
                 </Box>
               ) : (
                 <Box>
-                <Box
-                  sx={{
-                    pr: 4,
-                    mb: 1,
-                  }}
+                  <Box
+                    sx={{
+                      pr: 4,
+                      mb: 1,
+                    }}
                   >
                     <Typography
                       component="h2"
@@ -257,23 +263,23 @@ export const ShrimpLeaderboard = ({
                         fontSize: "1.5rem",
                         lineHeight: 1.2,
                       }}
-                  >
-                    High scores
-                  </Typography>
-                </Box>
-                {entries.map((entry, index) => (
-                  <Box
-                    key={entry.id}
-                    sx={{
-                      display: "grid",
-                      gridTemplateColumns: "38px minmax(0, 1fr) auto",
-                      gap: 1.5,
+                    >
+                      High scores
+                    </Typography>
+                  </Box>
+                  {entries.map((entry, index) => (
+                    <Box
+                      key={entry.id}
+                      sx={{
+                        display: "grid",
+                        gridTemplateColumns: "38px minmax(0, 1fr) auto",
+                        gap: 1.5,
                         minHeight: 42,
-                      borderTop: 1,
-                      borderColor: "divider",
-                      alignItems: "center",
-                    }}
-                  >
+                        borderTop: 1,
+                        borderColor: "divider",
+                        alignItems: "center",
+                      }}
+                    >
                       <Typography
                         sx={{
                           color: "primary.main",
