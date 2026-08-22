@@ -16,7 +16,7 @@ export const MOVEMENTS: Record<string, Movement> = {
 export const BUBBLE_NAMES = ["one", "two", "three", "four"] as const;
 
 export const shrimpAssets = {
-  background: "/assets/shrimp/background/tank.webp",
+  background: "/assets/shrimp/background/tank-clear-stratum-natural-light.webp",
   bubble: "/assets/shrimp/items/bubble.png",
   pellet: "/assets/shrimp/items/pellet.png",
   idle: "/assets/shrimp/sprites/idle.png",

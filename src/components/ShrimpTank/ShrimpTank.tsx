@@ -209,17 +209,20 @@ export const ShrimpTank = ({
           sx={{
             position: "absolute",
             zIndex: 3,
-            top: game.hasStarted ? 28 : 78,
+            top: game.hasStarted ? 18 : 78,
             left: 28,
             color: colors.tank.score,
-            bgcolor: alpha(colors.paper, 0.34),
-            px: 0.75,
-            py: 0.25,
-            fontSize: ".68rem",
-            letterSpacing: ".1em",
+            bgcolor: game.hasStarted
+              ? alpha(colors.paper, 0.24)
+              : alpha(colors.paper, 0.34),
+            px: game.hasStarted ? 0.65 : 0.75,
+            py: game.hasStarted ? 0.2 : 0.25,
+            fontSize: game.hasStarted ? ".72rem" : ".68rem",
+            letterSpacing: game.hasStarted ? ".08em" : ".1em",
             fontWeight: 700,
             textTransform: "uppercase",
-            transition: "top .3s ease",
+            transition:
+              "top .45s ease, background-color .45s ease, padding .45s ease, font-size .45s ease, letter-spacing .45s ease",
           }}
         >
           score{" "}
@@ -335,11 +338,6 @@ export const ShrimpTank = ({
             facing={game.facing}
           />
         </Box>
-        <ShrimpSprite
-          className="tank-shrimp shrimp-two"
-          isPartyTime={game.isPartyTime}
-          facing="left"
-        />
         <ShrimpControls onMove={moveShrimp} />
       </Box>
     </Dialog>

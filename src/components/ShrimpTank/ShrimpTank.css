@@ -89,10 +89,6 @@
   );
   animation: pellet-arrive 0.8s ease-out both;
 }
-.shrimp-two {
-  right: 42px;
-  bottom: 118px;
-}
 .party-message {
   position: absolute;
   z-index: 4;
